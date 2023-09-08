@@ -30,7 +30,7 @@ ${
       while (color.saturationv() < 60) {
         // Minimium saturation, to prevent infinite loops
         if (color.saturationv() < 1) {
-          color = color.saturationl(1);
+          color = color.saturationv(1);
         }
 
         color = color.saturate(0.1);
