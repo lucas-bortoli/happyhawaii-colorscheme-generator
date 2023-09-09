@@ -25,16 +25,7 @@ ${
       [210, "cyan"],
     ].map((v, i, colorTable) => {
       const [hue, name] = v as [number, string];
-      let color = palette.mainColor.hue(hue);
-
-      while (color.saturationv() < 60) {
-        // Minimium saturation, to prevent infinite loops
-        if (color.saturationv() < 1) {
-          color = color.saturationv(1);
-        }
-
-        color = color.saturate(0.1);
-      }
+      let color = palette.mainColor.hue(hue).saturationv(palette.averageSaturation * 1.1);
 
       console.log(color.saturationv());
 
@@ -65,7 +56,11 @@ ${userConfig}`;
 }
 
 export async function reloadKittyConfig() {
-  await new Deno.Command("killall", {
-    args: ["-s", "SIGUSR1", "kitty"],
-  }).spawn().status;
+  try {
+    await new Deno.Command("killall", {
+      args: ["-s", "SIGUSR1", "kitty"],
+    }).spawn().status;
+  } catch (_) {
+    // Ignore error
+  }
 }

@@ -24,9 +24,13 @@ async function main() {
 
   console.log(palette.asConsoleAnsiCodes());
 
-  await modifySwayConfig(join(HOME, ".config/sway/config"), palette, newWallpaper);
+  await modifySwayConfig(
+    join(HOME, ".config/sway/config"),
+    palette,
+    newWallpaper,
+  );
   await modifyKittyConfig(join(HOME, ".config/kitty/kitty.conf"), palette);
-  
+
   await reloadSwayConfig();
   await reloadKittyConfig();
 }

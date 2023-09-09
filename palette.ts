@@ -22,8 +22,7 @@ export class Palette {
 
     for (const color of this.colors) {
       colors.push(
-        ansi.setBgColor(color.red(), color.green(), color.blue()) +
-          " ".repeat(colorWidth),
+        ansi.setBgColor(color.red(), color.green(), color.blue()) + " ".repeat(colorWidth)
       );
     }
 
@@ -46,8 +45,14 @@ export class Palette {
     return this.colors.at(-2)!;
   }
 
+  get averageSaturation() {
+    const hueSum = this.colors.map((color) => color.saturationv()).reduce((acc, hue) => acc + hue);
+
+    return hueSum / this.colors.length;
+  }
+
   static async fromImage(imageLocation: string): Promise<Palette> {
-    const colorsRaw = await ColorThief.getPalette(imageLocation, 6) as Rgb[];
+    const colorsRaw = (await ColorThief.getPalette(imageLocation, 6)) as Rgb[];
 
     return new Palette(colorsRaw.map((c) => Color.rgb(...c)));
   }

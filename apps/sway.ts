@@ -5,7 +5,7 @@ const generatedMatch = /# GENERATED(.+)# END GENERATED/gsm;
 export async function modifySwayConfig(
   configLocation: string,
   palette: Palette,
-  wallpaper: string
+  wallpaper: string,
 ) {
   const rawConfig = await Deno.readTextFileSync(configLocation);
   const userConfig = rawConfig.replace(generatedMatch, "").trim();
@@ -25,5 +25,10 @@ ${userConfig}`;
 }
 
 export async function reloadSwayConfig() {
-  return await new Deno.Command("swaymsg", { args: ["reload"] }).spawn().status;
+  try {
+    return await new Deno.Command("swaymsg", { args: ["reload"] }).spawn()
+      .status;
+  } catch (_) {
+    // Ignore error
+  }
 }
