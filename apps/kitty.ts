@@ -10,7 +10,7 @@ export async function modifyKittyConfig(configLocation: string, palette: Palette
   const cursorFgColor = cursorBgColor.saturate(1.0).negate().grayscale();
 
   const newConfig = `# GENERATED
-cursor ${cursorBgColor.hex()}
+cursor ${palette.mainColor.saturate(0.25).hex()}
 cursor_text_color ${cursorFgColor.hex()}
 ${[
   [0, "red"],

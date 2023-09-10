@@ -4,6 +4,7 @@ import { join } from "https://deno.land/std@0.201.0/path/join.ts";
 import { Palette } from "./palette.ts";
 import { modifyKittyConfig, reloadKittyConfig } from "./apps/kitty.ts";
 import { modifySwayConfig, reloadSwayConfig } from "./apps/sway.ts";
+import { modifyMakoConfig, reloadMakoConfig } from "./apps/mako.ts";
 
 function chooseRandomWallpaper(sourceDirectory: string) {
   const wallpaperList = [...Deno.readDirSync(sourceDirectory)].filter(
@@ -25,9 +26,11 @@ async function main() {
 
   await modifySwayConfig(join(HOME, ".config/sway/config"), palette, newWallpaper);
   await modifyKittyConfig(join(HOME, ".config/kitty/kitty.conf"), palette);
+  await modifyMakoConfig(join(HOME, ".config/mako/config"), palette);
 
   await reloadSwayConfig();
   await reloadKittyConfig();
+  await reloadMakoConfig();
 }
 
 main();
